@@ -1,4 +1,4 @@
-# QETools #QuantumEspresso #pw #DFT
+# QETools
 QETools is a set of tools with gui to make it easier to posproccesing and preprocceisng the quantum espresso calculations.
 
 At this time, it can extract the values from the quantum espresso xml file and calculate the bandgap and plot it, find bonds and their length and give a quick statistics on them (save them in output files after the other properties), plot dos files, create input files from structure file (CONTCAR,POSCAR,CIF) and define the parameters in the GUI. 
