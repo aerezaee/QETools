@@ -1,0 +1,8 @@
+&dos
+    outdir='$outdir'
+    prefix ='$prefix'
+    fildos='$prefix.dos',
+    Emin=-10, 
+	Emax=20, 
+	DeltaE=0.01
+/

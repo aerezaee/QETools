@@ -1,0 +1,7 @@
+ &projwfc
+    outdir='./out/'
+    prefix ='QE'
+    DeltaE=0.01
+    kresolveddos=.false.
+    filpdos='QE'
+/

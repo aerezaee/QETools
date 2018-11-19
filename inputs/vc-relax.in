@@ -1,0 +1,52 @@
+&control
+	calculation='vc-relax',
+	pseudo_dir= '$pseudo_dir'
+	prefix = '$prefix'
+	outdir= '$outdir'
+	verbosity = '$verbosity'
+	nstep = $nstep
+	restart_mode = '$restart_mode'
+	etot_conv_thr = $etot_conv_thr,
+	forc_conv_thr = $forc_conv_thr,
+/ 
+
+&system
+	ibrav= $ibrav,
+	nat= $nat, 
+	ntyp= $ntyp,
+	ecutwfc= $ecutwfc,
+	input_dft= '$input_dft',
+	occupations= '$occupations',
+	smearing= '$smearing',
+	degauss= $degauss,
+/
+
+&electrons
+	diagonalization='$diagonalization',
+	mixing_mode = '$mixing_mode',
+	mixing_beta = $mixing_beta,
+	conv_thr =  $conv_thr,
+	electron_maxstep = $electron_maxstep
+	scf_must_converge = .$scf_must_converge.
+/ 
+
+&ions
+	ion_dynamics = '$ion_dynamics'
+/
+
+&cell
+	cell_dynamics='$cell_dynamics'
+	cell_factor = $cell_factor
+/
+
+ATOMIC_SPECIES
+$species
+
+CELL_PARAMETERS angstrom
+$cellparameters
+
+ATOMIC_POSITIONS crystal
+$atomicLocations
+
+K_POINTS $kepointType
+$kpoints

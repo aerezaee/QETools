@@ -1,0 +1,8 @@
+&dos
+    outdir='./out/'
+    prefix ='QE'
+    fildos='QE.dos',
+    Emin=-10, 
+	Emax=20, 
+	DeltaE=0.01
+/

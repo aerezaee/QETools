@@ -1,0 +1,7 @@
+ &projwfc
+    outdir='$outdir'
+    prefix ='$prefix'
+    DeltaE=0.01
+    kresolveddos=.false.
+    filpdos='$prefix'
+/
