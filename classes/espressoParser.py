@@ -4,7 +4,6 @@ from tkinter import filedialog
 import os;
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 from matplotlib.ticker import NullFormatter
 from scipy.signal import *
 from ase import Atoms, Atom;
@@ -31,7 +30,6 @@ class outputResults:
         self.sfSteps = 0;                   #number of steps for relaxation calculation
         self.numberOfAtoms = 0;             #number of atoms
         self.alat = 1;                      #lattice constant
-        self.locations = 0;                 #locations of atoms (pandas DF)
         self.cell = [];                     #cell vectors (3x3)
         self.cellDimension = [];            #cell dimensions (3x1)
         self.totalEnergy = 0;               #total energy of structure
@@ -42,17 +40,18 @@ class outputResults:
         self.directory = path;              #working directory
         self.const = Constants();           #Constnats values
         self.occu = occu;                   #occupation criteria for calculating the band gap
-        self.fileName = fileName;
-        self.bonds = [];
-        self.staticsDatas = [];              #contains the statistics of Bond Lengths
-        self.atomLabels = "";                #Contains the atom labels ans their number
+        self.fileName = fileName;           #Keeps the file name
+        self.bonds = [];                    #Keeps the bonds
+        self.staticsDatas = [];             #contains the statistics of Bond Lengths
+        self.atomLabels = "";               #Contains the atom labels ans their number
 
         self.tickLabels = ['G','X','Y','Z','G'];    #tick labels
-        self.tickLocations = [];
-        self.bondLengthes = [];
+        self.tickLocations = [];            #A list for place of ticks
+
         self.calculation();
 
     def calculation(self):
+        #The main calculations method: parse the XML file and give values to fields.
         fileName = self.fileName;
         tree = ET.parse(fileName);
         root = tree.getroot()
@@ -62,31 +61,32 @@ class outputResults:
 
 
         for child in root:
-            if child.tag == "output":
+            if child.tag == "output": #separating the output node in xml
                 outputNode = child;
         for child in outputNode:
             if child.tag == "band_structure":
-                bandStructureNode = child;
+                bandStructureNode = child;#separting the band structure node
         for energy in outputNode.iter("etot"):
-            self.totalEnergy = float(energy.text)*self.const.ry2ev;
+            self.totalEnergy = float(energy.text)*self.const.ry2ev;#extracting the total energy
         bands = [];
-        for band in bandStructureNode.iter("eigenvalues"):
+        for band in bandStructureNode.iter("eigenvalues"): #extracting the eigenvalues of bands
             bands.append([float(eigen) * self.const.h2ev for eigen in band.text.split()]);
-        self.eigenValues = np.transpose(np.array(bands));
+        self.eigenValues = np.transpose(np.array(bands)); #Transposing the eigenvalues to make it plotable
 
         occupations = [];
-        for occupation in bandStructureNode.iter("occupations"):
+        for occupation in bandStructureNode.iter("occupations"):#Extracting occupation values for any of eigenvalues to calculate the bandgap
             occupations.append([float(eigen) for eigen in occupation.text.split()]);
-        self.occupations = np.transpose(np.array(occupations));
+        self.occupations = np.transpose(np.array(occupations));#transposing to make it compatible with eigenvalues
+
         for energy in bandStructureNode.iter("fermi_energy"):
-            self.fermiEnergy = float(energy.text) * self.const.h2ev;
+            self.fermiEnergy = float(energy.text) * self.const.h2ev;#Extracting the fermi energy level
 
         for nks in bandStructureNode.iter("nks"):   #Get the number of bands
             self.nKPoints = int(nks.text);
-        for nks in bandStructureNode.iter("nk"):
+        for nks in bandStructureNode.iter("nk"):    #Get the number of bands in no band calculation
             self.nKPoints = int(nks.text);
 
-        atomicPositionNode = "";    #extracting the positions and atoms
+        atomicPositionNode = "";    #extracting the atoms, positions and cell
         cellNode = "";
         for child in outputNode:
             if child.tag == "atomic_structure":
@@ -115,7 +115,7 @@ class outputResults:
         self.bondsCalculator();
 
     def bandCalculator(self):
-
+        """this method calculate the bands and bandgap based on fermi energy and occupation number of bands"""
         cutZero = 0; #finding the band that pass the fermi-band
         cutZeroType = "";
         maxValue = -1000;
@@ -128,14 +128,12 @@ class outputResults:
         for i, eig in enumerate(self.eigenValues):
             eig = eig - self.fermiEnergy;
             color = 'b';
-            #print (i,occ[i],np.min(eig), np.max(eig));
             if (occ[i] >=self.occu) and (np.max(eig) > np.max(vBand)):
                 vBand = eig;
                 vBandNumber = i;
             elif (occ[i] < self.occu ) and (np.min(eig) < np.min(cBand)):
                 cBand = eig;
                 cBandNumber = i;
-                #print (occ[i], i);
 
         maxValue = np.max(self.eigenValues);
         minValue = np.min(self.eigenValues);
@@ -300,10 +298,10 @@ class outputResults:
         with open(filePath) as f:
             firstLine = f.readline()
         fermi = float(firstLine.split()[-2]);
-        dosDF = pd.read_csv(filePath, skiprows=1, sep=r"\s+", names = ['E','dos','intDos']);
+        dosDF = np.loadtxt(filePath, skiprows=0);
         b, a = butter(a,b)
-        x = dosDF['E'].astype(float)
-        dos = (dosDF['dos']-fermi).astype(float)
+        x = dosDF[:,0];
+        dos = dosDF[:,1]-fermi;
         dosFiltered = filtfilt(b, a, dos , padlen=1)
         plt.plot(dosFiltered, x,'blue', label = "DOS");
         #draw zero line:

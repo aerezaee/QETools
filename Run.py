@@ -1,7 +1,7 @@
 # pylint: disable=C0111,R0902,R0902,W0611,W0301,C0103,C0411
 import pip
 
-pkgs = ['PyQt5', 'ase', 'pandas']
+pkgs = ['PyQt5', 'ase']
 for package in pkgs:
     try:
         exec("import {}".format(package));
