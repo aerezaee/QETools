@@ -24,7 +24,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMessageBox
 import classes.inputMaker as inputMaker;
-from classes.espressoParser import *
+from classes.espressoParser import *;
+from classes.nebUI import *;
 
 uiMainWindow, QtBaseClass = uic.loadUiType("ui.ui")
 
@@ -41,6 +42,7 @@ class App(QtWidgets.QMainWindow, uiMainWindow):
         self.dosPlotBtn.clicked.connect(self.dosPlotBtnHandler)
         self.convertBtn.clicked.connect(self.convertBtnHandler)
         self.occupationSpin.valueChanged.connect(self.occupationSpinHandler)
+        self.nebBtn.clicked.connect(self.nebBtnHandler);
         # Define Files
         self.fileLocation = ""
         self.directory = os.path.dirname(os.path.realpath(__file__))
@@ -97,6 +99,9 @@ class App(QtWidgets.QMainWindow, uiMainWindow):
     def saveBtnHandler(self):
         fileName = self.fileChooser(type="save")
         self.outputs.saveOutput(outputFile=fileName)
+    def nebBtnHandler(self):
+        self.nebPlotter = nebApp();
+        self.nebPlotter.show();
 
     def dosPlotBtnHandler(self):
         try:

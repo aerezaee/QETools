@@ -353,6 +353,19 @@
      <string>Convert</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="nebBtn">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>20</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>NEB Plotter</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

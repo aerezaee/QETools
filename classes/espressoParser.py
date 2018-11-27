@@ -25,7 +25,6 @@ class outputResults:
         self.occupations = [];              #value of occupations for any of eigen values
         self.nKPoints = 0;                  #Number of kpoints for calculating the eigenvalues
         self.kPoints = [];                  #the kpoints used to calculate the eigenvalues
-        self.nband = 0;                     #number of bands
         self.nAtomicWFC = 0;                #number of atomic wfcs
         self.sfSteps = 0;                   #number of steps for relaxation calculation
         self.numberOfAtoms = 0;             #number of atoms
@@ -44,7 +43,6 @@ class outputResults:
         self.bonds = [];                    #Keeps the bonds
         self.staticsDatas = [];             #contains the statistics of Bond Lengths
         self.atomLabels = "";               #Contains the atom labels ans their number
-
         self.tickLabels = ['G','X','Y','Z','G'];    #tick labels
         self.tickLocations = [];            #A list for place of ticks
 
@@ -160,6 +158,10 @@ class outputResults:
 
     def plotBand(self , usingAntonate = True, usingLines = True, usingFermiLine = True, usingXTicks = True):
         maxValue, minValue, vBand, cBand,vLoc, cLoc = self.valuesForPlotting;
+        ticksFontSize = 13;
+        labelsFontSize = 14;
+        valueFontSize = 14;
+
         for i in self.eigenValues:
             color = 'black'; linewidth = 0.5; label = "";
             i = i - self.fermiEnergy;
@@ -180,11 +182,10 @@ class outputResults:
             if(self.directBandGap == False): plt.plot(vLine*0+cLoc[0], vLine, color = 'y');
         #expresing plot limits
         plt.xlim(xmax = self.nKPoints-1, xmin = 0);
-        #ymin, ymax = self.yLim + self.bandGap;
         ymin, ymax = self.yLim;
         self.yLim = [ymin, ymax];
         plt.ylim(ymin = self.yLim[0], ymax = self.yLim[1]);
-        plt.ylabel("E-Ef(eV)"); plt.xlabel ('K Points');
+        plt.ylabel("E-Ef(eV)",fontsize = labelsFontSize); plt.xlabel ('K Points',fontsize = labelsFontSize);
         
 
         if (usingXTicks):
@@ -199,6 +200,9 @@ class outputResults:
             
             #print ("ticks:\t", ticks, tickLabels);
             plt.xticks(ticks, tickLabels);
+            plt.xticks(fontsize=ticksFontSize);
+            plt.yticks(fontsize = ticksFontSize);
+
             
 
 
@@ -209,7 +213,7 @@ class outputResults:
             if (cLoc[0] + 4 > self.nKPoints-1):
                 antX = cLoc[0] - 4;
             else: antX = cLoc[0] + 0.5;
-            plt.annotate("{0:.3f} eV".format(self.bandGap), xy = (antX, (cLoc[1]+vLoc[1])/2), va='center', size=9);
+            plt.annotate("{0:.2f} eV".format(self.bandGap), xy = (antX, (cLoc[1]+vLoc[1])/2), va='center', size=9,fontsize = 12);
 
         #plt.legend(loc = 0, fancybox = True, shadow = False,  ncol = 3, fontsize = 7);
         plt.grid(True);
@@ -232,8 +236,7 @@ class outputResults:
                 if (distance <= (b1 + b2)):
                     bonds.append([names[i], names[j], i, j, distance]);
 
-        self.bonds = np.array(bonds);
-        #print (self.bonds);
+        self.bonds = np.array(bonds); #convert list to numpy array
         uniqueAtoms = np.unique(self.bonds[:,0]);
         self.staticsDatas = [];
         for at in uniqueAtoms:
@@ -366,52 +369,3 @@ ang2au = 1.8897261339213;
 au2ang = 1./ang2au;
 h2ev = 27.2114;
 
-class Espresso:
-    def __init__(self, file):
-        self.file = file;
-        self.directory  = os.path.dirname(os.path.realpath(__file__));
-    def start(self):
-
-        occ = 1;
-        
-        output = outputResults(fileName= self.file,path = os.path.dirname(os.path.abspath(self.file)), occu = occ );
-        try:
-            occ = int(input("If You want to change occupation number, you can enter it"));
-        except:
-            occ = 1;
-
-        output.calculation();
-
-
-        print ("\nOutput values:\n",output);
-        ans = input("Do you want to save the structures in a file? (type the file name or only N to answer No)\n")
-        if (ans.lower()!="n"):
-            output.saveOutput(ans);
-        ans = input("Do you want to plot the band structure? (Y for yes, others for No)\n")
-        if (ans.lower()=="y"):     
-            output.plotBand(usingLines = False);
-        ans = input("Do you have a DOS file to plot? (Y for yes, others for No)\n");
-        if (ans.lower()=="y") : output.dosPlotter();
-        ans = input("Do you want to visualize the structure? (Y for yes, others for No)\n");
-        if (ans.lower()=="y") : output.view();
-
-if __name__ == '__main__':        
-    repeat = True;
-    directory = os.path.dirname(os.path.realpath(__file__));
-    while(repeat):
-        root = tk.Tk()
-        root.withdraw();
-        filePath = filedialog.askopenfilename(initialdir = directory,title = "Select a QE XML file to parse");
-        directory = os.path.dirname(os.path.abspath(filePath));
-        #print(type(filePath), filePath);
-        root.destroy();
-        if (str(filePath).lower().endswith(".xml")):
-            espresso = Espresso(filePath);
-            espresso.start();
-            ans = input("Do you want to choose another XML file? (Y for yes, others for no)");
-            if (ans.lower() != 'y'): 
-                repeat = False;
-        elif (str(filePath) == ""):
-            repeat = False;
-        else:
-            print ("Wrong File Choosed");
