@@ -23,14 +23,17 @@
     </rect>
    </property>
    <property name="plainText">
-    <string>1
-2
-3
-4
-5
-6
-7
-8</string>
+    <string>-523.2538805
+-522.7895516
+-523.0864063
+-522.9183905
+-523.2192523
+-523.389196
+-523.0598411
+-522.9292259
+-523.0128113
+-522.842924
+</string>
    </property>
   </widget>
   <widget class="QPushButton" name="plotBtn">
@@ -133,14 +136,17 @@
     </rect>
    </property>
    <property name="plainText">
-    <string>1
+    <string>0
 2
-3
 4
-5
 6
-7
-8</string>
+8
+10
+12
+14
+16
+18
+</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
@@ -166,7 +172,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Ang</string>
+    <string>\AA</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="yUnit">
@@ -206,6 +212,48 @@
    </property>
    <property name="text">
     <string>Y Unit:</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="arrowChk">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>270</y>
+     <width>141</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Show only Highest Value</string>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="labelInput">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>295</y>
+     <width>81</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Path 1</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>295</y>
+     <width>61</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Label</string>
    </property>
   </widget>
  </widget>

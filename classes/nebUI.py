@@ -16,20 +16,24 @@ class nebApp(QtWidgets.QMainWindow, uiMainWindow):
         #Button: plotBtn, #outout:nebOutput, #input: nebInput #sep: sepCombo #xRangeInput, yRangeInput
 
         self.plotBtn.clicked.connect(self.plotBtnHandler);
-        self.nebObject = nebPlotter();
+        self.nebObject = 0;
     def plotBtnHandler(self):
-        try:
-            energyText = self.nebInput.toPlainText();
-            locationText = self.nebLocationInput.toPlainText();
-            sep = self.sepCombo.currentText();
-            if sep == "\\n":
-                sep = os.linesep;
-            print(sep);
-            self.nebObject = nebPlotter(energyText=energyText,locationText = locationText,sep=sep);
-            self.nebOutput.setPlainText(str(self.nebObject));
-            self.nebObject.plot(xUnit = self.xUnit.text(), yUnit= self.yUnit.text());
-        except Exception as e:
-            self.nebOutput.setPlainText("Please enter values and choose separator in correct format and sequence");
+        #try:
+        energyText = self.nebInput.toPlainText();
+        locationText = self.nebLocationInput.toPlainText();
+        label = self.labelInput.text();
+        highestArrow = self.arrowChk.isChecked();
+        sep = self.sepCombo.currentText();
+        if sep == "\\n":
+            sep = os.linesep;
+        print(sep);
+        self.nebObject = 0;
+        self.nebObject = nebPlotter(energyText=energyText,locationText = locationText,sep=sep,highestArrow=highestArrow, label = label);
+        self.nebOutput.setPlainText(str(self.nebObject));
+        self.nebObject.plot(xUnit = self.xUnit.text(), yUnit= self.yUnit.text());
+        #except Exception as e:
+            #self.nebOutput.setPlainText("Please enter values and choose separator in correct format and sequence");
+            #print (str(e));
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
