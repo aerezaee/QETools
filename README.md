@@ -12,3 +12,4 @@ This script is depends on PYQT5 (https://pypi.org/project/PyQt5/) and ASE (https
 ![Proccessing a XML file](https://raw.githubusercontent.com/aerezaee/QETools/master/Images/1.PNG)
 ![Calculating bandgap and plotting](https://raw.githubusercontent.com/aerezaee/QETools/master/Images/2.PNG)
 ![Create input files](https://raw.githubusercontent.com/aerezaee/QETools/master/Images/3.PNG)
+![NEB Plotter](https://raw.githubusercontent.com/aerezaee/QETools/master/Images/4.PNG)
