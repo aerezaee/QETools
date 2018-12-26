@@ -5,7 +5,6 @@ import re
 import sys
 import xml.etree.ElementTree as ET
 import numpy as np
-import xmltodict as xt
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMessageBox
