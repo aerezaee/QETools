@@ -376,7 +376,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>NEB Plotter</string>
+     <string>PDOS Plotter</string>
     </property>
    </widget>
   </widget>
