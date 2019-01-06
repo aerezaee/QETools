@@ -156,7 +156,12 @@ class App(QtWidgets.QMainWindow, uiMainWindow):
             self.errorMessage("Please Select a Acceptable File (CONTCAR,OUTCAR,CIF)", "Error")
 
     def viewBtnHandler(self):
-        ase.visualize.view(self.atoms);
+        #ase.visualize.view(self.atoms);
+        self.atoms.edit();
+        cellText = "";
+        for line in self.atoms.get_cell():
+            cellText += "{:4.6f}\t{:4.6f}\t{:4.6f}\n".format(line[0], line[1], line[2])
+        self.cellparameters.setPlainText(cellText);
 
     def fileChooser(self, type="open"):
         fileName = ""

@@ -366,6 +366,19 @@
      <string>NEB Plotter</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pdosBtn">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>20</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>NEB Plotter</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

@@ -26,6 +26,7 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMessageBox
 import classes.inputMaker as inputMaker;
 from classes.espressoParser import *;
 from classes.nebUI import *;
+from classes.pdos import *;
 
 uiMainWindow, QtBaseClass = uic.loadUiType("ui.ui")
 
@@ -43,6 +44,7 @@ class App(QtWidgets.QMainWindow, uiMainWindow):
         self.convertBtn.clicked.connect(self.convertBtnHandler)
         self.occupationSpin.valueChanged.connect(self.occupationSpinHandler)
         self.nebBtn.clicked.connect(self.nebBtnHandler);
+        self.pdosBtn.clicked.connect(self.pdosBtnHandler);
         # Define Files
         self.fileLocation = ""
         self.directory = os.path.dirname(os.path.realpath(__file__))
@@ -120,6 +122,11 @@ class App(QtWidgets.QMainWindow, uiMainWindow):
     def convertBtnHandler(self):
         self.inputMaker = inputMaker.App();
         self.inputMaker.show();
+
+    def pdosBtnHandler(self):
+        pdos = PDOS();
+        pdos.loadFiles();
+        pdos.plot();
 
     ###############
     def errorMessage(self, text, title):  # text: the text of messagebox and title is the title of messagebox
