@@ -1,0 +1,61 @@
+&control
+	calculation='scf',
+	pseudo_dir= './ps/'
+	prefix = '@name'
+	outdir= './out/'
+	verbosity = 'low'
+	nstep = 100
+	etot_conv_thr = 1e-6,
+	forc_conv_thr = 1e-3,
+/ 
+
+&system
+	ibrav= 0,
+	nat= 1, 
+	ntyp= 2,
+	ecutwfc= @ecutwfc,
+	input_dft= 'PBE',
+	occupations= 'smearing',
+	smearing= 'methfessel-paxton',
+	degauss= 0.0012,
+/
+
+&electrons
+	diagonalization='david',
+	mixing_mode = 'plain',
+	mixing_beta = 0.7,
+	conv_thr =  1e-6,
+	electron_maxstep = 50
+	scf_must_converge = .false.
+/ 
+
+&ions
+	ion_dynamics = 'bfgs'
+/
+
+&cell
+	cell_dynamics='bfgs'
+	cell_factor = 5
+/
+
+ATOMIC_SPECIES
+P	30.973762	P.UPF
+O	15.9998		O.UPF
+
+
+CELL_PARAMETERS angstrom
+5.271392	0.219547	0.000000
+0.294690	5.376735	0.000000
+0.000000	0.000000	5.563095
+
+
+ATOMIC_POSITIONS crystal
+P        0.0522420000      0.1417920000      0.4303090000                 
+            
+             
+             
+             
+
+
+K_POINTS gamma
+1 1 1 0 0 0

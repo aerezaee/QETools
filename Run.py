@@ -27,6 +27,7 @@ import classes.inputMaker as inputMaker;
 from classes.espressoParser import *;
 from classes.nebUI import *;
 from classes.pdos import *;
+from classes.cutoffUI import *;
 
 uiMainWindow, QtBaseClass = uic.loadUiType("ui.ui")
 
@@ -45,6 +46,7 @@ class App(QtWidgets.QMainWindow, uiMainWindow):
         self.occupationSpin.valueChanged.connect(self.occupationSpinHandler)
         self.nebBtn.clicked.connect(self.nebBtnHandler);
         self.pdosBtn.clicked.connect(self.pdosBtnHandler);
+        self.cutoffBtn.clicked.connect(self.cutoffBtnHandler);
         # Define Files
         self.fileLocation = ""
         self.directory = os.path.dirname(os.path.realpath(__file__))
@@ -127,6 +129,10 @@ class App(QtWidgets.QMainWindow, uiMainWindow):
         pdos = PDOS();
         pdos.loadFiles();
         pdos.plot();
+
+    def cutoffBtnHandler(self):
+        self.cutoff = cutOffApp();
+        self.cutoff.show();
 
     ###############
     def errorMessage(self, text, title):  # text: the text of messagebox and title is the title of messagebox
