@@ -51,9 +51,9 @@ class App(QtWidgets.QMainWindow, uiMainWindow):
         self.yRange = [-1, 1]
         self.xTicks = ["G", "Y", "X", "Z", "G"]
         self.xTicksLocations = [];
-        self.xmlFile = ""
-        self.inputs = ""
-        self.outputs = ""
+        self.xmlFile = "";
+        self.inputs = "";
+        self.outputs = "";
         self.fileOpened = False
 
     def oepnXMLBtnHandler(self):
@@ -166,3 +166,4 @@ if __name__ == "__main__":
     window = App()
     window.show()
     sys.exit(app.exec_())
+    
