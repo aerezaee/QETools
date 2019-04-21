@@ -100,7 +100,7 @@ class App(QtWidgets.QMainWindow, uiMainWindow):
             #self.yRange = eval(self.yRangeInput.text())
             self.yRange = [float(i) for i in self.yRangeInput.text().split(",")];
             self.outputs.yLim = self.yRange
-        except Exception as e:
+        except  Exception as e:
             self.errorMessage("Wrong Value", "Please enter the range as ymin,ymax like -1,1");
 
         try:
