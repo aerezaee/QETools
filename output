@@ -1,22 +1,23 @@
 &control
-	calculation='scf',
+	calculation= 'scf',
 pseudo_dir = './inputs/ps/'
-	prefix = '@name'
+	prefix = 'QE'
 	outdir= './out/'
 	verbosity = 'low'
 	nstep = 100
+	restart_mode = 'from_scratch'
 	etot_conv_thr = 1e-6,
 	forc_conv_thr = 1e-3,
 / 
 
 &system
-	ibrav= 0,
-	nat= 1, 
-	ntyp= 2,
-ecutwfc = 20
+	ibrav= 0
+	nat= 24, 
+	ntyp= 4,
+ecutwfc = 60
 	input_dft= 'PBE',
 	occupations= 'smearing',
-	smearing= 'methfessel-paxton',
+	smearing= 'mp',
 	degauss= 0.0012,
 /
 
@@ -25,12 +26,12 @@ ecutwfc = 20
 	mixing_mode = 'plain',
 	mixing_beta = 0.7,
 	conv_thr =  1e-6,
-	electron_maxstep = 50
+	electron_maxstep = 100
 	scf_must_converge = .false.
 / 
 
 &ions
-	ion_dynamics = 'bfgs'
+	ion_dynamics = 'bfgs',
 /
 
 &cell
@@ -39,23 +40,45 @@ ecutwfc = 20
 /
 
 ATOMIC_SPECIES
-P	30.973762	P.UPF
-O	15.9998		O.UPF
+Co	58.933194	Co.UPF
+Cu	63.546000	Cu.UPF
+Fe	55.845000	Fe.UPF
+O	15.999000	O.UPF
 
 
 CELL_PARAMETERS angstrom
-5.271392	0.219547	0.000000
-0.294690	5.376735	0.000000
-0.000000	0.000000	5.563095
+8.537000	0.000000	0.000000
+0.000000	8.537000	0.000000
+0.000000	0.000000	4.268500
 
 
 ATOMIC_POSITIONS crystal
-P        0.0522420000      0.1417920000      0.4303090000                 
-            
-             
-             
-             
+Co	0.62500000	0.37500000	0.75000000
+Cu	0.12500000	0.12500000	0.25000000
+Cu	0.87500000	0.12500000	0.75000000
+Cu	0.87500000	0.37500000	0.25000000
+Cu	0.62500000	0.12500000	0.25000000
+Cu	0.62500000	0.62500000	0.25000000
+Cu	0.87500000	0.87500000	0.25000000
+Cu	0.12500000	0.87500000	0.75000000
+Cu	0.37500000	0.62500000	0.75000000
+Cu	0.87500000	0.62500000	0.75000000
+Cu	0.62500000	0.87500000	0.75000000
+Cu	0.12500000	0.37500000	0.75000000
+Cu	0.37500000	0.12500000	0.75000000
+Cu	0.37500000	0.37500000	0.25000000
+Cu	0.37500000	0.87500000	0.25000000
+Fe	0.12500000	0.62500000	0.25000000
+O	0.75000000	0.25000000	0.50000000
+O	0.25000000	0.75000000	0.50000000
+O	0.50000000	0.50000000	0.00000000
+O	0.00000000	0.50000000	0.00000000
+O	0.25000000	0.25000000	0.50000000
+O	0.00000000	0.00000000	0.00000000
+O	0.50000000	0.00000000	0.00000000
+O	0.75000000	0.75000000	0.50000000
 
 
 K_POINTS gamma
 1 1 1 0 0 0
+
